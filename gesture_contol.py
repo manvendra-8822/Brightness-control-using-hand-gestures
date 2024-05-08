@@ -48,9 +48,9 @@ while True:
     if landmark_list: 
         x1, y1 = landmark_list[4][1], landmark_list[4][2] 
         x2, y2 = landmark_list[8][1], landmark_list[8][2] 
-        cv2.circle(frame, (x1, y1), 7, (0, 255, 0), cv2.FILLED) 
-        cv2.circle(frame, (x2, y2), 7, (0, 255, 0), cv2.FILLED) 
-        cv2.line(frame, (x1, y1), (x2, y2), (0, 255, 0), 3) 
+        cv2.circle(frame, (x1, y1), 7, (255,192,203), cv2.FILLED) 
+        cv2.circle(frame, (x2, y2), 7, (222, 49, 99), cv2.FILLED) 
+        cv2.line(frame, (x1, y1), (x2, y2), (255,192,203), 3) 
         length = hypot(x2-x1, y2-y1) 
         brightness_level = np.interp(length, [15, 220], [0, 100]) 
   
@@ -65,3 +65,23 @@ while True:
 # Release the capture and destroy windows
 cap.release()
 cv2.destroyAllWindows()
+
+
+'''from ctypes import cast,POINTER
+from comtypes import CLSCTX_ALL
+from pycaw.pycaw import AudioUtilities,IAudioEndpointVolume
+import threading
+
+devices = AudioUtilities.GetSpeakers()
+interface = devices.Activate(IAudioEndpointVolume._iid_,CLSCTX_ALL,None)
+volume = cast(interface,POINTER(IAudioEndpointVolume))
+volRange = volume.GetVolumeRange()
+minVolume = volRange[0]
+maxVolume = volRange[1]
+
+def setVolume(dist):
+    vol = np.interp(int(dist), [35, 215], [minVolume, maxVolume])
+    volume.SetMasterVolumeLevel(vol, None)
+    
+This is additional code for using the volume control functionality as well
+'''
